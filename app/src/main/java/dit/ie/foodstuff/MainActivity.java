@@ -1,7 +1,7 @@
 package dit.ie.foodstuff;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,11 +24,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set show food as default fragment on start up
-        Fragment fragment = new ShowFood();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Set show food as default fragment on start up
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_main, new ShowFood()).commit();
     }
 
     @Override
@@ -91,30 +90,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment fragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (id == R.id.showFood)
         {
-            fragment = new ShowFood();
+            fragmentManager.beginTransaction().replace(R.id.content_main, new ShowFood()).commit();
         }
         else if (id == R.id.addItem)
         {
-            fragment = new AddNewItem();
+            fragmentManager.beginTransaction().replace(R.id.content_main, new AddNewItem()).commit();
         }
         else if (id == R.id.shoppingList)
         {
-            fragment = new ShoppingList();
+            fragmentManager.beginTransaction().replace(R.id.content_main, new ShoppingList()).commit();
         }
         else if (id == R.id.shops)
         {
-            fragment = new LocalShops();
-        }
-
-        if (fragment != null)
-        {
-            // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_main, new LocalShops()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
