@@ -33,6 +33,9 @@ public class ShowFood extends Fragment
         appBarLayout = (AppBarLayout)content_main.findViewById(R.id.appbar);
         tabLayout = new TabLayout(getActivity());
         tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
+        appBarLayout.addView(tabLayout);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
 
         viewPager = (ViewPager)view.findViewById(R.id.pager);
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getFragmentManager());
@@ -56,7 +59,7 @@ public class ShowFood extends Fragment
             super(fragmentManager);
         }
 
-        String[] titleTabs = {"Fridge", "Fruit & Veg", "Confectionery", "Miscellaneous"};
+        String[] titleTabs = {"Fridge Freezer", "Fruit & Veg", "Confectionery", "Miscellaneous"};
 
         @Override
         public Fragment getItem(int position)
