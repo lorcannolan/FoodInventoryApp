@@ -8,4 +8,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="food_categories">
+        <item>Fridge Freezer</item>
+        <item>Fruit &amp; Veg</item>
+        <item>Confectionery</item>
+        <item>Miscellaneous</item>
+    </string-array>
 </resources>

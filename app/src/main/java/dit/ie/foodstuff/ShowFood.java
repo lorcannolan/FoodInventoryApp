@@ -59,7 +59,7 @@ public class ShowFood extends Fragment
             super(fragmentManager);
         }
 
-        String[] titleTabs = {"Fridge Freezer", "Fruit & Veg", "Confectionery", "Miscellaneous"};
+        String[] titleTabs = getResources().getStringArray(R.array.food_categories);
 
         @Override
         public Fragment getItem(int position)
