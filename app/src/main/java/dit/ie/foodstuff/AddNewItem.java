@@ -121,5 +121,4 @@ public class AddNewItem extends Fragment
 
         return view;
     }
-
 }

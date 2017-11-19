@@ -36,7 +36,6 @@ public class ShowFood extends Fragment
         appBarLayout.addView(tabLayout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-
         viewPager = (ViewPager)view.findViewById(R.id.pager);
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getFragmentManager());
         viewPager.setAdapter(pagerAdapter);
