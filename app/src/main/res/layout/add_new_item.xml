@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="dit.ie.foodstuff.AddNewItem">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="60dp"
+        android:layout_marginLeft="@dimen/fab_margin"
         android:gravity="top"
-        android:layout_marginLeft="@dimen/fab_margin">
+        android:paddingTop="115dp">
 
         <TextView
             android:id="@+id/name"
@@ -25,19 +25,19 @@
             android:id="@+id/enterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter Food Name"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_toRightOf="@+id/name"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true" />
+            android:hint="Enter Food Name" />
 
         <TextView
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
             android:layout_alignParentLeft="true"
+            android:layout_below="@+id/name"
             android:layout_marginTop="@dimen/new_item_margin"
             android:text="Description:" />
 
@@ -45,52 +45,54 @@
             android:id="@+id/enterDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter Food Description"
+            android:layout_alignBaseline="@+id/desc"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_toRightOf="@+id/desc"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_alignBaseline="@+id/desc"
-            android:layout_alignParentRight="true" />
+            android:hint="Enter Food Description" />
 
         <TextView
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/desc"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="@dimen/double_new_item_margin"
+            android:layout_below="@+id/desc"
+            android:layout_marginTop="@dimen/desc_item_margin"
             android:text="Category:" />
 
         <Spinner
             android:id="@+id/category_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:layout_toRightOf="@+id/category"
-            android:layout_marginLeft="@dimen/fab_margin"
             android:layout_below="@+id/desc"
-            android:layout_marginTop="@dimen/double_new_item_margin"/>
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/desc_item_margin"
+            android:layout_toRightOf="@+id/category" />
 
         <TextView
             android:id="@+id/exDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/category"
             android:layout_alignParentLeft="true"
+            android:layout_below="@+id/category"
             android:layout_marginTop="@dimen/new_item_margin"
             android:text="Expiration Date:" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/enterDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/exDate"
+            android:layout_below="@+id/category_spinner"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            android:layout_toRightOf="@id/exDate"
-            android:layout_below="@+id/category_spinner"
             android:layout_marginTop="@dimen/new_item_margin"
-            android:layout_alignBaseline="@id/exDate"
+            android:layout_toRightOf="@id/exDate"
             android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:focusable="false"
             android:inputType="date" />
 
         <TextView
@@ -102,6 +104,29 @@
             android:layout_marginTop="@dimen/new_item_margin"
             android:text="Quantity:" />
 
+        <EditText
+            android:id="@+id/enterQty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/qty"
+            android:layout_below="@+id/enterDate"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/new_item_margin"
+            android:layout_toRightOf="@+id/qty"
+            android:ems="2"
+            android:inputType="number" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/green"
+            app:srcCompat="@drawable/ic_done_white_24dp" />
 
     </RelativeLayout>
 

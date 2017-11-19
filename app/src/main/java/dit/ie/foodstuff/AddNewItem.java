@@ -1,5 +1,9 @@
 package dit.ie.foodstuff;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AddNewItem extends Fragment
 {
+    private DatePickerDialog pickDate;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
@@ -28,6 +40,51 @@ public class AddNewItem extends Fragment
                 R.array.food_categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.done);
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Details Entered", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        /*
+        Following code taken from https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
+         */
+        final Calendar myCalendar = Calendar.getInstance();
+
+        final EditText enterDate = (EditText)view.findViewById(R.id.enterDate);
+
+        enterDate.setOnClickListener(new View.OnClickListener()
+        {
+            DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
+            {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                {
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, monthOfYear);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                    String myFormat = "dd/MM/yyyy";
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+
+                    enterDate.setText(sdf.format(myCalendar.getTime()));
+                }
+
+            };
+
+            @Override
+            public void onClick(View v)
+            {
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         return view;
     }
