@@ -1,7 +1,6 @@
 package dit.ie.foodstuff;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,8 +20,6 @@ import java.util.Locale;
 
 public class AddNewItem extends Fragment
 {
-    private DatePickerDialog pickDate;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
@@ -41,7 +38,9 @@ public class AddNewItem extends Fragment
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.done);
+        FloatingActionButton fab, plus, minus;
+
+        fab = (FloatingActionButton)view.findViewById(R.id.done);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -83,6 +82,40 @@ public class AddNewItem extends Fragment
                 new DatePickerDialog(getActivity(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        final EditText qty = (EditText)view.findViewById(R.id.enterQty);
+        qty.setText("0");
+
+        plus = (FloatingActionButton)view.findViewById(R.id.add);
+        plus.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String qtyString = qty.getText().toString();
+                int val = Integer.parseInt(qtyString);
+                val++;
+                qtyString = Integer.toString(val);
+                qty.setText(qtyString);
+            }
+        });
+
+        minus = (FloatingActionButton)view.findViewById(R.id.remove);
+        minus.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String qtyString = qty.getText().toString();
+                int val = Integer.parseInt(qtyString);
+                if(val != 0)
+                {
+                    val--;
+                    qtyString = Integer.toString(val);
+                    qty.setText(qtyString);
+                }
             }
         });
 
