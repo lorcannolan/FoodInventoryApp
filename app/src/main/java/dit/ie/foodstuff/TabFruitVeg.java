@@ -33,7 +33,7 @@ public class TabFruitVeg extends Fragment
                 fragmentManager.beginTransaction().replace(R.id.content_main, new AddNewItem()).commit();
             }
         });
-        
+
         return view;
     }
 

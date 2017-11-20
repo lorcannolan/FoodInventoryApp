@@ -1,15 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dit.ie.foodstuff.LocalShops">
 
-    <TextView
-        android:id="@+id/localShopsText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Local Shops" />
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:paddingTop="60dp" >
+
+            <ImageButton
+                android:id="@+id/superValu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/supervalu_logo"
+                style="?android:attr/borderlessButtonStyle"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+            android:id="@+id/tesco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/superValu"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/tesco_logo"
+            style="?android:attr/borderlessButtonStyle"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/dunnes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tesco"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/dunnes_logo"
+                style="?android:attr/borderlessButtonStyle"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/lidl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dunnes"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/lidl_logo"
+                style="?android:attr/borderlessButtonStyle"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/aldi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lidl"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/aldi_logo"
+                style="?android:attr/borderlessButtonStyle"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>
