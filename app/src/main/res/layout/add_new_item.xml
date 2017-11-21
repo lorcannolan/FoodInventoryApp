@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/fab_margin"
         android:gravity="top"
-        android:paddingTop="115dp">
+        android:paddingTop="60dp">
 
         <TextView
             android:id="@+id/name"
@@ -96,11 +96,43 @@
             android:inputType="date" />
 
         <TextView
-            android:id="@+id/qty"
+            android:id="@+id/barcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/exDate"
+            android:layout_marginTop="@dimen/new_item_margin"
+            android:text="Barcode:" />
+
+        <EditText
+            android:id="@+id/enterBarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/barcode"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/enterDate"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/new_item_margin"
+            android:layout_toRightOf="@+id/barcode"
+            android:inputType="number"
+            android:hint="Enter Barcode" />
+
+        <Button
+            android:id="@+id/scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan"
+            android:layout_alignBottom="@+id/enterBarcode"
+            android:layout_alignRight="@+id/enterBarcode"
+            android:layout_alignEnd="@+id/enterBarcode" />
+
+        <TextView
+            android:id="@+id/qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/barcode"
             android:layout_marginTop="@dimen/new_item_margin"
             android:text="Quantity:" />
 
@@ -122,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/qty"
-            android:layout_below="@+id/enterDate"
+            android:layout_below="@+id/barcode"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_marginTop="@dimen/new_item_margin"

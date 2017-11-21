@@ -1,25 +1,40 @@
 package dit.ie.foodstuff;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.google.zxing.client.android.Intents;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CameraPreview;
+
 public class AddNewItem extends Fragment
 {
+    public EditText barcodeInput;
+    public String barcode;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
@@ -119,6 +134,53 @@ public class AddNewItem extends Fragment
             }
         });
 
+        //Ensures permissions are set for camera
+        final int MY_CAMERA_REQUEST_CODE = 100;
+
+        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CAMERA},
+                    MY_CAMERA_REQUEST_CODE);
+        }
+
+        barcodeInput = (EditText)view.findViewById(R.id.enterBarcode);
+
+        Button scan = (Button)view.findViewById(R.id.scan);
+        scan.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (ContextCompat.checkSelfPermission(v.getContext(), Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    scanFromFragment();
+                }
+            }
+        });
+
         return view;
+    }
+
+    public void scanFromFragment()
+    {
+        IntentIntegrator.forSupportFragment(this).setPrompt("Scan Something").initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null)
+        {
+            if(result.getContents() == null)
+            {
+                barcodeInput.setText("0");
+            }
+            else
+            {
+                barcodeInput.setText(result.getContents());
+            }
+        }
     }
 }
