@@ -1,13 +1,16 @@
 package dit.ie.foodstuff;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -153,7 +156,8 @@ public class AddNewItem extends Fragment
             public void onClick(View v)
             {
                 if (ContextCompat.checkSelfPermission(v.getContext(), Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_GRANTED) {
+                        == PackageManager.PERMISSION_GRANTED)
+                {
                     scanFromFragment();
                 }
             }
@@ -171,6 +175,7 @@ public class AddNewItem extends Fragment
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity(), "Scanned " + result.getContents(), Toast.LENGTH_SHORT).show();
         if(result != null)
         {
             if(result.getContents() == null)
