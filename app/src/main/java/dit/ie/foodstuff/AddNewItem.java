@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -73,7 +74,7 @@ public class AddNewItem extends Fragment
 
         //insertBarcode = insertName = insertCategory = insertDate = insertQty = "";
 
-        final DatabaseOutline myDatabase = new DatabaseOutline(getActivity());
+        final DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
         final Spinner spinner = (Spinner)view.findViewById(R.id.category_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -81,7 +82,7 @@ public class AddNewItem extends Fragment
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        FloatingActionButton fab, plus, minus;
+        FloatingActionButton fab, plus, minus, check;
 
         fab = (FloatingActionButton)view.findViewById(R.id.done);
         fab.setOnClickListener(new View.OnClickListener()
@@ -102,10 +103,30 @@ public class AddNewItem extends Fragment
                 else
                 {
                     myDatabase.open();
-                    myDatabase.insertItem(insertBarcode, insertName, insertCategory, insertDate, insertQty);
+                    long num = myDatabase.insertItem(insertBarcode, insertName, insertCategory, insertDate, insertQty);
                     myDatabase.close();
-                    Snackbar.make(view, "Food Inserted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    if (num == -1)
+                    {
+                        Snackbar.make(view, "Insert ERROR", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    }
+                    else
+                    {
+                        Snackbar.make(view, "Insert SUCCESS", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    }
                 }
+            }
+        });
+
+        check = (FloatingActionButton)view.findViewById(R.id.check);
+        check.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                //Snackbar.make(view, "Details Entered", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                    myDatabase.open();
+                    Cursor c = myDatabase.getMiscellaneous("Miscellaneous");
+                    myDatabase.close();
             }
         });
 

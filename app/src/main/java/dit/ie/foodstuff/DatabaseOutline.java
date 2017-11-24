@@ -22,9 +22,9 @@ public class DatabaseOutline
 
     // SQL statement to create the database
     private static final String DATABASE_CREATE =
-            "create table Items (_id varchar2 primary key, " +
+            "create table " + TABLE_ITEMS + " (_id varchar2 not null, " +
                     "prod_name text not null, " + "prod_category text not null, " +
-                    "prod_ex_date text not null), " + "prod_qty integer not null;";
+                    "prod_ex_date text primary key, " + "prod_qty integer not null);";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -56,8 +56,8 @@ public class DatabaseOutline
         //
         public void onCreate(SQLiteDatabase db)
         {
-
             // Execute SQL to create your tables (call the execSQL method of the SQLLiteDatabase class, passing in your create table(s) SQL)
+            db.execSQL(DATABASE_CREATE);
         }
 
         @Override
@@ -101,7 +101,7 @@ public class DatabaseOutline
                                 ITEMS_EX_DATE,
                                 ITEMS_QUANTITY
                         },
-                ITEMS_CATEGORY + "=" + categoryMisc,  null, null, null, null, null);
+                ITEMS_CATEGORY + "='" + categoryMisc + "'",  null, null, null, null, null); //QUOTE WHEN LOOKING FOR STRINGS
 
         if (mCursor != null)
         {
