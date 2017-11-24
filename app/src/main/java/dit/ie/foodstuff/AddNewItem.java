@@ -39,6 +39,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -52,8 +53,10 @@ import org.json.JSONObject;
 public class AddNewItem extends Fragment
 {
     private static final String DEBUG_TAG = "HttpExample";
-    public EditText barcodeInput, nameInput;
+    public EditText barcodeInput, nameInput, dateInput, qtyInput;
     public String barcode;
+    public String insertBarcode, insertName, insertCategory, insertDate;
+    public int insertQty;
     private String url = "https://world.openfoodfacts.org/api/v0/product/";
 
     @Override
@@ -68,7 +71,11 @@ public class AddNewItem extends Fragment
     {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
 
-        Spinner spinner = (Spinner)view.findViewById(R.id.category_spinner);
+        //insertBarcode = insertName = insertCategory = insertDate = insertQty = "";
+
+        final DatabaseOutline myDatabase = new DatabaseOutline(getActivity());
+
+        final Spinner spinner = (Spinner)view.findViewById(R.id.category_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.food_categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -81,8 +88,24 @@ public class AddNewItem extends Fragment
         {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Details Entered", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Details Entered", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                insertBarcode = barcodeInput.getText().toString();
+                insertName = nameInput.getText().toString();
+                insertCategory = spinner.getSelectedItem().toString();
+                insertDate = dateInput.getText().toString();
+                insertQty = Integer.parseInt(qtyInput.getText().toString());
+                if (insertBarcode.equals("") || insertName.equals("") || insertCategory.equals("")
+                        || insertDate.equals("") || insertQty == 0)
+                {
+                    Snackbar.make(view, "Enter ALL Details", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+                else
+                {
+                    myDatabase.open();
+                    myDatabase.insertItem(insertBarcode, insertName, insertCategory, insertDate, insertQty);
+                    myDatabase.close();
+                    Snackbar.make(view, "Food Inserted", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
             }
         });
 
@@ -91,9 +114,9 @@ public class AddNewItem extends Fragment
          */
         final Calendar myCalendar = Calendar.getInstance();
 
-        final EditText enterDate = (EditText)view.findViewById(R.id.enterDate);
+        dateInput = (EditText)view.findViewById(R.id.enterDate);
 
-        enterDate.setOnClickListener(new View.OnClickListener()
+        dateInput.setOnClickListener(new View.OnClickListener()
         {
             DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
             {
@@ -107,7 +130,7 @@ public class AddNewItem extends Fragment
                     String myFormat = "dd/MM/yyyy";
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
 
-                    enterDate.setText(sdf.format(myCalendar.getTime()));
+                    dateInput.setText(sdf.format(myCalendar.getTime()));
                 }
 
             };
@@ -121,8 +144,8 @@ public class AddNewItem extends Fragment
             }
         });
 
-        final EditText qty = (EditText)view.findViewById(R.id.enterQty);
-        qty.setText("0");
+        qtyInput = (EditText)view.findViewById(R.id.enterQty);
+        qtyInput.setText("0");
 
         plus = (FloatingActionButton)view.findViewById(R.id.add);
         plus.setOnClickListener(new View.OnClickListener()
@@ -130,11 +153,11 @@ public class AddNewItem extends Fragment
             @Override
             public void onClick(View v)
             {
-                String qtyString = qty.getText().toString();
+                String qtyString = qtyInput.getText().toString();
                 int val = Integer.parseInt(qtyString);
                 val++;
                 qtyString = Integer.toString(val);
-                qty.setText(qtyString);
+                qtyInput.setText(qtyString);
             }
         });
 
@@ -144,13 +167,13 @@ public class AddNewItem extends Fragment
             @Override
             public void onClick(View v)
             {
-                String qtyString = qty.getText().toString();
+                String qtyString = qtyInput.getText().toString();
                 int val = Integer.parseInt(qtyString);
                 if(val != 0)
                 {
                     val--;
                     qtyString = Integer.toString(val);
-                    qty.setText(qtyString);
+                    qtyInput.setText(qtyString);
                 }
             }
         });
@@ -246,11 +269,20 @@ public class AddNewItem extends Fragment
         protected void onPostExecute(String result)
         {
             String name = "";
+            String status = "";
             try
             {
                 JSONObject jsonObject = new JSONObject(result);
-                JSONObject productInfo = (JSONObject)jsonObject.get("product");
-                name = productInfo.getString("product_name");
+                status = jsonObject.getString("status_verbose");
+                if (status.equals("product found"))
+                {
+                    JSONObject productInfo = (JSONObject) jsonObject.get("product");
+                    name = productInfo.getString("product_name");
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Manually Input Details", Toast.LENGTH_SHORT).show();
+                }
             }
             catch (JSONException e)
             {
