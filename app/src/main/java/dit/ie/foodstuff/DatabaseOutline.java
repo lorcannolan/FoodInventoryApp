@@ -22,9 +22,9 @@ public class DatabaseOutline
 
     // SQL statement to create the database
     private static final String DATABASE_CREATE =
-            "create table " + TABLE_ITEMS + " (_id varchar2 not null, " +
+            "create table " + TABLE_ITEMS + " (_id varchar2 primary key, " +
                     "prod_name text not null, " + "prod_category text not null, " +
-                    "prod_ex_date text primary key, " + "prod_qty integer not null);";
+                    "prod_ex_date text not null, " + "prod_qty integer not null);";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -87,7 +87,7 @@ public class DatabaseOutline
         return db.insert(TABLE_ITEMS, null, initialValues);
     }
 
-    public String check() throws  SQLException
+    public String check(String category) throws  SQLException
     {
         String testDB = null;
         Cursor mCursor =   db.query(true, TABLE_ITEMS, new String[]
@@ -99,7 +99,7 @@ public class DatabaseOutline
                                 ITEMS_EX_DATE,
                                 ITEMS_QUANTITY
                         },
-                null,  null, null, null, null, null);
+                ITEMS_CATEGORY + "='" + category + "'",  null, null, null, null, null);
 
         if (mCursor.moveToFirst())
         {
@@ -109,7 +109,7 @@ public class DatabaseOutline
         return testDB;
     }
 
-    public Cursor getMiscellaneous(String categoryMisc) throws SQLException
+    public Cursor getCategoryFood(String category) throws SQLException
     {
         // The query method from SQLLiteDatabase class has various parameters that define the query: the database table, the string of columns names to be returned and
         // the last set of parameters allow you to specify "where" conditions for the query.  In this case, there is just one "where" clause. The others are unused.
@@ -123,7 +123,7 @@ public class DatabaseOutline
                                 ITEMS_EX_DATE,
                                 ITEMS_QUANTITY
                         },
-                ITEMS_CATEGORY + "='" + categoryMisc + "'",  null, null, null, null, null); //QUOTE WHEN LOOKING FOR STRINGS
+                ITEMS_CATEGORY + "='" + category + "'",  null, null, null, null, null); //QUOTE WHEN LOOKING FOR STRINGS
 
         if (mCursor != null)
         {

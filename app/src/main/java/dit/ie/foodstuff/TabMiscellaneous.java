@@ -41,36 +41,31 @@ public class TabMiscellaneous extends Fragment
             }
         });
 
-        textView = (TextView)view.findViewById(R.id.food);
+        textView = (TextView)view.findViewById(R.id.misc);
 
         String setTextView = "";
 
         DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
         myDatabase.open();
-        String emptydbCheck = myDatabase.check();
+        String emptydbCheck = myDatabase.check("Miscellaneous");
         if (emptydbCheck == null)
         {
             setTextView = "No miscellaneous food to show!!!";
         }
         else
         {
-            Cursor c = myDatabase.getMiscellaneous("Miscellaneous");
+            Cursor c = myDatabase.getCategoryFood("Miscellaneous");
             myDatabase.close();
 
             c.moveToFirst();
-            if (c != null) {
-                do {
-                    for (int i = 0; i < c.getColumnCount(); i++) {
-                        c.getType(i);
-                        if (i == FIELD_TYPE_INTEGER) {
-                            Log.e("************", "" + c.getInt(i));
-                            setTextView += c.getInt(i) + " ";
-                        } else {
-                            Log.e("************", "" + c.getString(i));
-                            setTextView += c.getString(i) + " ";
-                        }
-                        setTextView += "\n";
+            if (c != null)
+            {
+                do
+                {
+                    for (int i = 0; i < c.getColumnCount(); i++)
+                    {
+                        setTextView += c.getString(i) + " ";
                     }
                 } while (c.moveToNext());
             }

@@ -72,7 +72,7 @@ public class AddNewItem extends Fragment
     {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
 
-        //insertBarcode = insertName = insertCategory = insertDate = insertQty = "";
+        //insertBarcode = insertName = insertCategory = insertDate = "";
 
         final DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
@@ -114,19 +114,6 @@ public class AddNewItem extends Fragment
                         Snackbar.make(view, "Insert SUCCESS", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     }
                 }
-            }
-        });
-
-        check = (FloatingActionButton)view.findViewById(R.id.check);
-        check.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Details Entered", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                    myDatabase.open();
-                    Cursor c = myDatabase.getMiscellaneous("Miscellaneous");
-                    myDatabase.close();
             }
         });
 

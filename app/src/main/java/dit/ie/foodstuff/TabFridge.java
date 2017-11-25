@@ -1,5 +1,6 @@
 package dit.ie.foodstuff;
 
+import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class TabFridge extends Fragment
 {
+    TextView textView;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
@@ -34,6 +38,37 @@ public class TabFridge extends Fragment
                 fragmentManager.beginTransaction().replace(R.id.content_main, new AddNewItem()).commit();
             }
         });
+
+        textView = (TextView)view.findViewById(R.id.fridge);
+
+        String setTextView = "";
+
+        DatabaseOutline myDatabase = new DatabaseOutline(getContext());
+
+        myDatabase.open();
+        String emptydbCheck = myDatabase.check("Fridge Freezer");
+        if (emptydbCheck == null)
+        {
+            setTextView = "No fridge food to show!!!";
+        }
+        else
+        {
+            Cursor c = myDatabase.getCategoryFood("Fridge Freezer");
+            myDatabase.close();
+
+            c.moveToFirst();
+            if (c != null)
+            {
+                do
+                {
+                    for (int i = 0; i < c.getColumnCount(); i++)
+                    {
+                        setTextView += c.getString(i) + " ";
+                    }
+                } while (c.moveToNext());
+            }
+        }
+        textView.setText(setTextView);
 
         return view;
     }

@@ -23,6 +23,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/enterBarcode"
                     android:layout_alignParentLeft="true"
+                    android:inputType="number"
                     android:text="Barcode:" />
 
                 <EditText
@@ -99,7 +100,6 @@
                     android:layout_marginRight="@dimen/fab_margin"
                     android:layout_marginTop="@dimen/new_item_margin"
                     android:layout_toRightOf="@+id/name"
-                    android:inputType="number"
                     android:hint="Enter Food Name" />
 
                 <Button
@@ -176,16 +176,6 @@
                 android:layout_margin="@dimen/fab_margin"
                 app:backgroundTint="@color/green"
                 app:srcCompat="@drawable/ic_done_white_24dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/green"
-            app:srcCompat="@drawable/ic_done_white_24dp" />
     </RelativeLayout>
 
 </FrameLayout>

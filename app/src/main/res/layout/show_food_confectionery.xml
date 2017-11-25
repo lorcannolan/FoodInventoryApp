@@ -11,10 +11,10 @@
         android:layout_height="match_parent" >
 
         <TextView
+            android:id="@+id/confec"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Show Food Fruit Confectionery" />
+            android:gravity="center" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/insert"
