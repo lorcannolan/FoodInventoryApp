@@ -13,10 +13,10 @@ public class DatabaseOutline
 
     private static final String TABLE_ITEMS 	= "Items";
     private static final String ITEMS_BARCODE 	    = "_id";
-    private static final String ITEMS_NAME = "prod_name";
+    public static final String ITEMS_NAME = "prod_name";
     private static final String ITEMS_CATEGORY = "prod_category";
     private static final String ITEMS_EX_DATE = "prod_ex_date";
-    private static final String ITEMS_QUANTITY = "prod_qty";
+    public static final String ITEMS_QUANTITY = "prod_qty";
 
     private static final int DATABASE_VERSION 	= 1; // since it is the first version of the dB
 
