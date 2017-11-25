@@ -87,6 +87,28 @@ public class DatabaseOutline
         return db.insert(TABLE_ITEMS, null, initialValues);
     }
 
+    public String check() throws  SQLException
+    {
+        String testDB = null;
+        Cursor mCursor =   db.query(true, TABLE_ITEMS, new String[]
+                        {
+                                // this String array is the 2nd paramter to the query method - and is the list of columns you want to return
+                                ITEMS_BARCODE,
+                                ITEMS_NAME,
+                                ITEMS_CATEGORY,
+                                ITEMS_EX_DATE,
+                                ITEMS_QUANTITY
+                        },
+                null,  null, null, null, null, null);
+
+        if (mCursor.moveToFirst())
+        {
+            testDB = mCursor.getString(mCursor.getColumnIndex(ITEMS_BARCODE));
+        }
+        mCursor.close();
+        return testDB;
+    }
+
     public Cursor getMiscellaneous(String categoryMisc) throws SQLException
     {
         // The query method from SQLLiteDatabase class has various parameters that define the query: the database table, the string of columns names to be returned and

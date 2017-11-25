@@ -48,30 +48,33 @@ public class TabMiscellaneous extends Fragment
         DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
         myDatabase.open();
-        Cursor c = myDatabase.getMiscellaneous("Miscellaneous");
-        myDatabase.close();
-
-        c.moveToFirst();
-        if (c != null) {
-            do {
-                for (int i = 0; i < c.getColumnCount(); i++)
-                {
-                    c.getType(i);
-                    if (i == FIELD_TYPE_INTEGER)
-                    {
-                        Log.e("************", "" + c.getInt(i));
-                        setTextView += c.getInt(i) + " ";
-                    }
-                    else
-                    {
-                        Log.e("************", "" + c.getString(i));
-                        setTextView += c.getString(i) + " ";
-                    }
-                    setTextView += "\n";
-                }
-            }while (c.moveToNext());
+        String emptydbCheck = myDatabase.check();
+        if (emptydbCheck == null)
+        {
+            setTextView = "No miscellaneous food to show!!!";
         }
+        else
+        {
+            Cursor c = myDatabase.getMiscellaneous("Miscellaneous");
+            myDatabase.close();
 
+            c.moveToFirst();
+            if (c != null) {
+                do {
+                    for (int i = 0; i < c.getColumnCount(); i++) {
+                        c.getType(i);
+                        if (i == FIELD_TYPE_INTEGER) {
+                            Log.e("************", "" + c.getInt(i));
+                            setTextView += c.getInt(i) + " ";
+                        } else {
+                            Log.e("************", "" + c.getString(i));
+                            setTextView += c.getString(i) + " ";
+                        }
+                        setTextView += "\n";
+                    }
+                } while (c.moveToNext());
+            }
+        }
         textView.setText(setTextView);
 
         return view;
