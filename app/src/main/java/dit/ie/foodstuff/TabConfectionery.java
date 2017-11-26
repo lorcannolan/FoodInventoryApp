@@ -3,18 +3,20 @@ package dit.ie.foodstuff;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TabConfectionery extends Fragment
 {
-    TextView textView;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
@@ -38,8 +40,6 @@ public class TabConfectionery extends Fragment
             }
         });
 
-        textView = (TextView)view.findViewById(R.id.confec);
-
         String setTextView = "";
 
         DatabaseOutline myDatabase = new DatabaseOutline(getContext());
@@ -49,25 +49,17 @@ public class TabConfectionery extends Fragment
         if (emptydbCheck == null)
         {
             setTextView = "No confectionery food to show!!!";
+            Snackbar.make(view, setTextView, Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
         else
         {
             Cursor c = myDatabase.getCategoryFood("Confectionery");
             myDatabase.close();
 
-            c.moveToFirst();
-            if (c != null)
-            {
-                do
-                {
-                    for (int i = 0; i < c.getColumnCount(); i++)
-                    {
-                        setTextView += c.getString(i) + " ";
-                    }
-                } while (c.moveToNext());
-            }
+            ListView list = (ListView)view.findViewById(R.id.listConfec);
+            ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
+            list.setAdapter(adapter);
         }
-        textView.setText(setTextView);
 
         return view;
     }

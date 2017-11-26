@@ -3,6 +3,7 @@ package dit.ie.foodstuff;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -10,11 +11,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class TabFridge extends Fragment
 {
-    TextView textView;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
@@ -39,8 +41,6 @@ public class TabFridge extends Fragment
             }
         });
 
-        textView = (TextView)view.findViewById(R.id.fridge);
-
         String setTextView = "";
 
         DatabaseOutline myDatabase = new DatabaseOutline(getContext());
@@ -50,25 +50,17 @@ public class TabFridge extends Fragment
         if (emptydbCheck == null)
         {
             setTextView = "No fridge food to show!!!";
+            Snackbar.make(view, setTextView, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
         }
         else
         {
             Cursor c = myDatabase.getCategoryFood("Fridge Freezer");
             myDatabase.close();
 
-            c.moveToFirst();
-            if (c != null)
-            {
-                do
-                {
-                    for (int i = 0; i < c.getColumnCount(); i++)
-                    {
-                        setTextView += c.getString(i) + " ";
-                    }
-                } while (c.moveToNext());
-            }
+            ListView list = (ListView)view.findViewById(R.id.listFridge);
+            ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
+            list.setAdapter(adapter);
         }
-        textView.setText(setTextView);
 
         return view;
     }

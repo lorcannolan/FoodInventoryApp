@@ -12,11 +12,12 @@ public class DatabaseOutline
     private static final String DATABASE_NAME 	= "Foods";
 
     private static final String TABLE_ITEMS 	= "Items";
-    private static final String ITEMS_BARCODE 	    = "_id";
+    public static final String ITEMS_BARCODE 	    = "_id";
     public static final String ITEMS_NAME = "prod_name";
     private static final String ITEMS_CATEGORY = "prod_category";
     private static final String ITEMS_EX_DATE = "prod_ex_date";
     public static final String ITEMS_QUANTITY = "prod_qty";
+    public static final String ITEMS_IMG_URL = "prod_img_url";
 
     private static final int DATABASE_VERSION 	= 1; // since it is the first version of the dB
 
@@ -24,7 +25,8 @@ public class DatabaseOutline
     private static final String DATABASE_CREATE =
             "create table " + TABLE_ITEMS + " (_id varchar2 primary key, " +
                     "prod_name text not null, " + "prod_category text not null, " +
-                    "prod_ex_date text not null, " + "prod_qty integer not null);";
+                    "prod_ex_date text not null, " + "prod_qty integer not null, " +
+                    "prod_img_url text);";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -75,7 +77,7 @@ public class DatabaseOutline
         DBHelper.close();
     }
 
-    public long insertItem(String barcode, String foodName, String foodCategory, String foodExDate, int foodQty)
+    public long insertItem(String barcode, String foodName, String foodCategory, String foodExDate, int foodQty, String foodImgUrl)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(ITEMS_BARCODE, barcode);
@@ -83,6 +85,7 @@ public class DatabaseOutline
         initialValues.put(ITEMS_CATEGORY, foodCategory);
         initialValues.put(ITEMS_EX_DATE, foodExDate);
         initialValues.put(ITEMS_QUANTITY, foodQty);
+        initialValues.put(ITEMS_IMG_URL, foodImgUrl);
 
         return db.insert(TABLE_ITEMS, null, initialValues);
     }
@@ -97,7 +100,8 @@ public class DatabaseOutline
                                 ITEMS_NAME,
                                 ITEMS_CATEGORY,
                                 ITEMS_EX_DATE,
-                                ITEMS_QUANTITY
+                                ITEMS_QUANTITY,
+                                ITEMS_IMG_URL
                         },
                 ITEMS_CATEGORY + "='" + category + "'",  null, null, null, null, null);
 
@@ -121,7 +125,8 @@ public class DatabaseOutline
                                 ITEMS_NAME,
                                 ITEMS_CATEGORY,
                                 ITEMS_EX_DATE,
-                                ITEMS_QUANTITY
+                                ITEMS_QUANTITY,
+                                ITEMS_IMG_URL
                         },
                 ITEMS_CATEGORY + "='" + category + "'",  null, null, null, null, null); //QUOTE WHEN LOOKING FOR STRINGS
 

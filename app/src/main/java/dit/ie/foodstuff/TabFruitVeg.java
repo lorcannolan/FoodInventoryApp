@@ -1,19 +1,30 @@
 package dit.ie.foodstuff;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.InputStream;
 
 public class TabFruitVeg extends Fragment
 {
-    TextView textView;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
@@ -38,8 +49,6 @@ public class TabFruitVeg extends Fragment
             }
         });
 
-        textView = (TextView)view.findViewById(R.id.fruit);
-
         String setTextView = "";
 
         DatabaseOutline myDatabase = new DatabaseOutline(getContext());
@@ -49,28 +58,18 @@ public class TabFruitVeg extends Fragment
         if (emptydbCheck == null)
         {
             setTextView = "No fruit and veg food to show!!!";
+            Toast.makeText(getContext(), setTextView, Toast.LENGTH_LONG).show();
         }
         else
         {
             Cursor c = myDatabase.getCategoryFood("Fruit & Veg");
             myDatabase.close();
 
-            c.moveToFirst();
-            if (c != null)
-            {
-                do
-                {
-                    for (int i = 0; i < c.getColumnCount(); i++)
-                    {
-                        setTextView += c.getString(i) + " ";
-                    }
-                } while (c.moveToNext());
-            }
+            ListView list = (ListView)view.findViewById(R.id.listFandF);
+            ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
+            list.setAdapter(adapter);
         }
-        textView.setText(setTextView);
 
         return view;
     }
-
-
 }

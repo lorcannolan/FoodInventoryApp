@@ -7,15 +7,23 @@
     tools:context="dit.ie.foodstuff.ShowFood"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="top"
+        android:paddingTop="105dp">
+
+        <ListView
+            android:id="@+id/listFridge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/fridge"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" />
+        android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/insert"
@@ -27,7 +35,6 @@
             android:layout_margin="@dimen/fab_margin"
             app:backgroundTint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_add_white_24dp" />
-
     </RelativeLayout>
 
 

@@ -53,10 +53,10 @@ import org.json.JSONObject;
 
 public class AddNewItem extends Fragment
 {
-    private static final String DEBUG_TAG = "HttpExample";
+    private static final String DEBUG_TAG = "Http";
     public EditText barcodeInput, nameInput, dateInput, qtyInput;
     public String barcode;
-    public String insertBarcode, insertName, insertCategory, insertDate;
+    public String insertBarcode, insertName, insertCategory, insertDate, insertImgUrl;
     public int insertQty;
     private String url = "https://world.openfoodfacts.org/api/v0/product/";
 
@@ -103,7 +103,7 @@ public class AddNewItem extends Fragment
                 else
                 {
                     myDatabase.open();
-                    long num = myDatabase.insertItem(insertBarcode, insertName, insertCategory, insertDate, insertQty);
+                    long num = myDatabase.insertItem(insertBarcode, insertName, insertCategory, insertDate, insertQty, insertImgUrl);
                     myDatabase.close();
                     if (num == -1)
                     {
@@ -248,7 +248,7 @@ public class AddNewItem extends Fragment
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected())
         {
-            new DownloadWebpageTask().execute(stringUrl);
+            new InputFoodName().execute(stringUrl);
         }
         else
         {
@@ -260,7 +260,7 @@ public class AddNewItem extends Fragment
     it to create an HttpUrlConnection. Once the connection has been established, the AsyncTask downloads
     the contents of the webpage as an InputStream. Finally, the InputStream is converted into a string,
     which is displayed in the UI by the AsyncTask's onPostExecute method */
-    private class DownloadWebpageTask extends AsyncTask<String, Void, String>
+    private class InputFoodName extends AsyncTask<String, Void, String>
     {
         protected String doInBackground(String... urls) {
             // params comes from the execute() call: params[0] is the url.
@@ -276,6 +276,7 @@ public class AddNewItem extends Fragment
         // onPostExecute displays the results of the AsyncTask.
         protected void onPostExecute(String result)
         {
+            insertImgUrl = "";
             String name = "";
             String status = "";
             try
@@ -286,6 +287,21 @@ public class AddNewItem extends Fragment
                 {
                     JSONObject productInfo = (JSONObject) jsonObject.get("product");
                     name = productInfo.getString("product_name");
+                    if (productInfo.has("image_front_url"))
+                    {
+                        if (productInfo.getString("image_front_url") != null)
+                        {
+                            insertImgUrl = productInfo.getString("image_front_url");
+                        }
+                        else
+                        {
+                            insertImgUrl = "";
+                        }
+                    }
+                    else
+                    {
+                        insertImgUrl = "";
+                    }
                 }
                 else
                 {

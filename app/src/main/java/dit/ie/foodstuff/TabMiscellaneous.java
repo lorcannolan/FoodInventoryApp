@@ -2,6 +2,11 @@ package dit.ie.foodstuff;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -14,10 +19,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static android.database.Cursor.FIELD_TYPE_INTEGER;
 
@@ -66,57 +82,8 @@ public class TabMiscellaneous extends Fragment
             ListView list = (ListView)view.findViewById(R.id.list);
             ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
             list.setAdapter(adapter);
-            /*
-            c.moveToFirst();
-            if (c != null)
-            {
-                do
-                {
-                    for (int i = 0; i < c.getColumnCount(); i++)
-                    {
-                        setTextView += c.getString(i) + " ";
-                    }
-                } while (c.moveToNext());
-            }*/
         }
-        //textView.setText(setTextView);
 
         return view;
-    }
-
-    public class MyCursorAdapter extends CursorAdapter
-    {
-        private LayoutInflater cursorInflater;
-        private Context mContext;
-        DatabaseOutline myDatabase = new DatabaseOutline(getContext());
-
-        //Constructor
-        public MyCursorAdapter(Context context, Cursor cursor, int flags)
-        {
-            super(context, cursor, flags);
-            mContext = context;
-            cursorInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public void bindView(View v, Context context, Cursor cursor)
-        {
-            cursor.moveToFirst();
-            do
-            {
-                TextView title = (TextView)v.findViewById(R.id.displayTitle);
-                title.setText(cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_NAME)));
-                TextView qty = (TextView)v.findViewById(R.id.displayQty);
-                qty.setText(cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_QUANTITY)));
-            } while (cursor.moveToNext());
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent)
-        {
-            // R.layout.row is xml layout for each row
-            View v = cursorInflater.inflate(R.layout.row, parent, false);
-            return v;
-        }
     }
 }
