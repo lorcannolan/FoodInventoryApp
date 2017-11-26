@@ -9,9 +9,6 @@
             android:id="@+id/addItem"
             android:title="Add New Item" />
         <item
-            android:id="@+id/shoppingList"
-            android:title="Shopping List" />
-        <item
             android:id="@+id/shops"
             android:title="Local Shops" />
     </group>

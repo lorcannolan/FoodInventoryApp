@@ -124,7 +124,7 @@
                     android:id="@+id/remove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:backgroundTint="@color/colorPrimary"
+                    app:backgroundTint="@color/colorPrimaryDark"
                     app:srcCompat="@drawable/ic_remove_white_24dp"
                     app:fabSize="mini"
                     android:scaleX="0.8"
@@ -150,7 +150,7 @@
                     android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:backgroundTint="@color/colorPrimary"
+                    app:backgroundTint="@color/colorPrimaryDark"
                     app:srcCompat="@drawable/ic_add_white_24dp"
                     app:fabSize="mini"
                     android:scaleX="0.8"
@@ -174,7 +174,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/fab_margin"
-                app:backgroundTint="@color/green"
+                app:backgroundTint="@color/colorAccent"
                 app:srcCompat="@drawable/ic_done_white_24dp" />
     </RelativeLayout>
 

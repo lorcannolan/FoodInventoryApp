@@ -97,10 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             fragmentManager.beginTransaction().replace(R.id.content_main, new AddNewItem()).commit();
         }
-        else if (id == R.id.shoppingList)
-        {
-            fragmentManager.beginTransaction().replace(R.id.content_main, new ShoppingList()).commit();
-        }
         else if (id == R.id.shops)
         {
             fragmentManager.beginTransaction().replace(R.id.content_main, new LocalShops()).commit();
