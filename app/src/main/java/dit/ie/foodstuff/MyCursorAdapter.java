@@ -52,4 +52,5 @@ public class MyCursorAdapter extends CursorAdapter
         View v = cursorInflater.inflate(R.layout.row, parent, false);
         return v;
     }
+
 }

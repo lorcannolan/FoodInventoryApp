@@ -1,6 +1,7 @@
 package dit.ie.foodstuff;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -51,7 +53,7 @@ public class TabFruitVeg extends Fragment
 
         String setTextView = "";
 
-        DatabaseOutline myDatabase = new DatabaseOutline(getContext());
+        final DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
         myDatabase.open();
         String emptydbCheck = myDatabase.check("Fruit & Veg");
@@ -68,6 +70,17 @@ public class TabFruitVeg extends Fragment
             ListView list = (ListView)view.findViewById(R.id.listFandF);
             ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
+                    Cursor cursor = (Cursor)parent.getItemAtPosition(position);
+                    Intent i = new Intent(getContext(), ShowItem.class);
+                    i.putExtra("barcode", cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_BARCODE)));
+                    startActivity(i);
+                }
+            });
         }
 
         return view;

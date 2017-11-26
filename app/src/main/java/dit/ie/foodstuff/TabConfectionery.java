@@ -1,5 +1,6 @@
 package dit.ie.foodstuff;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,7 +44,7 @@ public class TabConfectionery extends Fragment
 
         String setTextView = "";
 
-        DatabaseOutline myDatabase = new DatabaseOutline(getContext());
+        final DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
         myDatabase.open();
         String emptydbCheck = myDatabase.check("Confectionery");
@@ -59,10 +61,18 @@ public class TabConfectionery extends Fragment
             ListView list = (ListView)view.findViewById(R.id.listConfec);
             ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
+                    Cursor cursor = (Cursor)parent.getItemAtPosition(position);
+                    Intent i = new Intent(getContext(), ShowItem.class);
+                    i.putExtra("barcode", cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_BARCODE)));
+                    startActivity(i);
+                }
+            });
         }
-
         return view;
     }
-
-
 }
