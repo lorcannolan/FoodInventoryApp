@@ -58,6 +58,11 @@ public class AddNewItem extends Fragment
     public String barcode;
     public String insertBarcode, insertName, insertCategory, insertDate, insertImgUrl;
     public int insertQty;
+    /*
+    URL is the start of every json file from the REST API Open Food Facts
+    Documentation on how to use this API was found at:
+    https://en.wiki.openfoodfacts.org/API
+     */
     private String url = "https://world.openfoodfacts.org/api/v0/product/";
 
     @Override
