@@ -57,17 +57,21 @@ public class TabFruitVeg extends Fragment
 
         myDatabase.open();
         String emptydbCheck = myDatabase.check("Fruit & Veg");
+
+        TextView empty = (TextView)view.findViewById(R.id.empty);
+        ListView list = (ListView)view.findViewById(R.id.listFandF);
+
         if (emptydbCheck == null)
         {
             setTextView = "No fruit and veg food to show!!!";
-            Toast.makeText(getContext(), setTextView, Toast.LENGTH_LONG).show();
+            empty.setText(setTextView);
+            list.setEmptyView(empty);
         }
         else
         {
             Cursor c = myDatabase.getCategoryFood("Fruit & Veg");
             myDatabase.close();
 
-            ListView list = (ListView)view.findViewById(R.id.listFandF);
             ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener()

@@ -9,6 +9,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/*
+Found at: https://stackoverflow.com/questions/18953632/how-to-set-image-from-url-for-imageview
+ */
+
 public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
     private String url;
@@ -24,8 +28,7 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
         try
         {
             URL urlConnection = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) urlConnection
-                    .openConnection();
+            HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();

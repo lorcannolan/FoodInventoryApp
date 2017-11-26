@@ -48,17 +48,21 @@ public class TabConfectionery extends Fragment
 
         myDatabase.open();
         String emptydbCheck = myDatabase.check("Confectionery");
+        TextView empty = (TextView)view.findViewById(R.id.empty);
+
+        ListView list = (ListView)view.findViewById(R.id.listConfec);
+
         if (emptydbCheck == null)
         {
             setTextView = "No confectionery food to show!!!";
-            Snackbar.make(view, setTextView, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            empty.setText(setTextView);
+            list.setEmptyView(empty);
         }
         else
         {
             Cursor c = myDatabase.getCategoryFood("Confectionery");
             myDatabase.close();
 
-            ListView list = (ListView)view.findViewById(R.id.listConfec);
             ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener()

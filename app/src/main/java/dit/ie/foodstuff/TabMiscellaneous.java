@@ -70,17 +70,21 @@ public class TabMiscellaneous extends Fragment
 
         myDatabase.open();
         String emptydbCheck = myDatabase.check("Miscellaneous");
+
+        TextView empty = (TextView)view.findViewById(R.id.empty);
+        ListView list = (ListView)view.findViewById(R.id.list);
+
         if (emptydbCheck == null)
         {
             setTextView = "No miscellaneous food to show!!!";
-            Toast.makeText(getContext(), setTextView, Toast.LENGTH_LONG).show();
+            empty.setText(setTextView);
+            list.setEmptyView(empty);
         }
         else
         {
             Cursor c = myDatabase.getCategoryFood("Miscellaneous");
             myDatabase.close();
 
-            ListView list = (ListView)view.findViewById(R.id.list);
             ListAdapter adapter = new MyCursorAdapter(getContext(), c, 0);
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener()

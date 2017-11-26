@@ -72,8 +72,6 @@ public class AddNewItem extends Fragment
     {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
 
-        //insertBarcode = insertName = insertCategory = insertDate = "";
-
         final DatabaseOutline myDatabase = new DatabaseOutline(getContext());
 
         final Spinner spinner = (Spinner)view.findViewById(R.id.category_spinner);
@@ -89,7 +87,6 @@ public class AddNewItem extends Fragment
         {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Details Entered", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 insertBarcode = barcodeInput.getText().toString();
                 insertName = nameInput.getText().toString();
                 insertCategory = spinner.getSelectedItem().toString();
@@ -255,15 +252,10 @@ public class AddNewItem extends Fragment
             Toast.makeText(getActivity(), "Manually input details", Toast.LENGTH_SHORT).show();
         }
     }
-
-    /* Use AsyncTask to create a task away from the main UI thread. This task takes a URL string and uses
-    it to create an HttpUrlConnection. Once the connection has been established, the AsyncTask downloads
-    the contents of the webpage as an InputStream. Finally, the InputStream is converted into a string,
-    which is displayed in the UI by the AsyncTask's onPostExecute method */
     private class InputFoodName extends AsyncTask<String, Void, String>
     {
-        protected String doInBackground(String... urls) {
-            // params comes from the execute() call: params[0] is the url.
+        protected String doInBackground(String... urls)
+        {
             try
             {
                 return downloadUrl(urls[0]);
@@ -273,7 +265,6 @@ public class AddNewItem extends Fragment
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
-        // onPostExecute displays the results of the AsyncTask.
         protected void onPostExecute(String result)
         {
             insertImgUrl = "";
@@ -316,10 +307,6 @@ public class AddNewItem extends Fragment
         }
     }
 
-    // Given a URL, establishes an HttpUrlConnection and retrieves
-    // the web page content as a InputStream, which it returns as
-    // a string.
-
     private String downloadUrl(String myurl) throws IOException
     {
         InputStream is = null;
@@ -338,13 +325,9 @@ public class AddNewItem extends Fragment
             Log.d(DEBUG_TAG, "The response is: " + response);
             is = conn.getInputStream();
 
-            // Convert the InputStream into a string
             String contentAsString = readIt(is);
 
             return contentAsString;
-
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
         }
         finally
         {
@@ -353,8 +336,7 @@ public class AddNewItem extends Fragment
             }
         }
     }
-    // Reads an InputStream and converts it to a String.
-    // Reads an InputStream and converts it to a String.
+
     private String readIt(InputStream is)
     {
 
