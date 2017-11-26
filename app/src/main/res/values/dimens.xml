@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="new_item_margin">64dp</dimen>
     <dimen name="desc_item_margin">96dp</dimen>
+    <dimen name="list_margin">8dp</dimen>
 </resources>

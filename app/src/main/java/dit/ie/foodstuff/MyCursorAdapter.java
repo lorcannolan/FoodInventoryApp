@@ -32,19 +32,17 @@ public class MyCursorAdapter extends CursorAdapter
         {
             ImageView img = (ImageView)v.findViewById(R.id.displayFood);
             img.setImageResource(R.drawable.not_found);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(400,400);
-            img.setLayoutParams(params);
         }
         else
         {
-            new ImageLoadTask(cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_IMG_URL)),
-                    (ImageView)v.findViewById(R.id.displayFood)).execute();
-
+            new ImageLoadTask(imgUrl, (ImageView)v.findViewById(R.id.displayFood)).execute();
         }
         TextView title = (TextView)v.findViewById(R.id.displayTitle);
         title.setText(cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_NAME)));
         TextView qty = (TextView)v.findViewById(R.id.displayQty);
         qty.setText(cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_QUANTITY)));
+        TextView exp = (TextView)v.findViewById(R.id.displayEx);
+        exp.setText(cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_EX_DATE)));
     }
 
     @Override
