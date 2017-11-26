@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,11 @@ public class TabFridge extends Fragment
                     Intent i = new Intent(getContext(), ShowItem.class);
                     i.putExtra("barcode", cursor.getString(cursor.getColumnIndexOrThrow(myDatabase.ITEMS_BARCODE)));
                     startActivity(i);
+                    ShowFood showFood = new ShowFood();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_main, showFood);
+                    fragmentTransaction.commit();
                 }
             });
         }
