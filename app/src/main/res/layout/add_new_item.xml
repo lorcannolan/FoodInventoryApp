@@ -121,11 +121,11 @@
                     android:text="Quantity:" />
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/add"
+                    android:id="@+id/remove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimary"
-                    app:srcCompat="@drawable/ic_add_white_24dp"
+                    app:srcCompat="@drawable/ic_remove_white_24dp"
                     app:fabSize="mini"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
@@ -142,16 +142,16 @@
                     android:layout_marginLeft="@dimen/fab_margin"
                     android:layout_marginRight="@dimen/fab_margin"
                     android:layout_marginTop="@dimen/new_item_margin"
-                    android:layout_toRightOf="@+id/add"
+                    android:layout_toRightOf="@+id/remove"
                     android:ems="2"
                     android:inputType="number" />
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/remove"
+                    android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/colorPrimary"
-                    app:srcCompat="@drawable/ic_remove_white_24dp"
+                    app:srcCompat="@drawable/ic_add_white_24dp"
                     app:fabSize="mini"
                     android:scaleX="0.8"
                     android:scaleY="0.8"

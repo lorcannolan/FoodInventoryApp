@@ -41,7 +41,6 @@ import static android.database.Cursor.FIELD_TYPE_INTEGER;
 
 public class TabMiscellaneous extends Fragment
 {
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {

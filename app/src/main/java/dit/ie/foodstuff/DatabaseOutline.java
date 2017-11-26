@@ -160,4 +160,16 @@ public class DatabaseOutline
         }
         return mCursor;
     }
+
+    public void updateQuantity(int qty, String barcode) throws SQLException
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("prod_qty", qty);
+        db.update("Items", contentValues, "_id=" + barcode, null);
+    }
+
+    public void deleteItem(String barcode)
+    {
+        db.delete("Items", "_id" + "=" + barcode, null);
+    }
 }
